@@ -93,6 +93,7 @@ The dataset is at the event level, meaning the unit of analysis is an official i
 
 Table 1 displays threat descriptions for a specified date from the BDI dataset.
 
+
 #### Table 1
 ```{r chunk2, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -114,8 +115,10 @@ datatable(
 ## Exploratory Data Analysis (EDA)
 
 
-Figure 2 displays the number of threats made against local officials over time. There is a clear, though uneven, increase in the number of threats, with a peak in July 2024. This coincides with an assassination attempt on former president and current presidential candidate Donald Trump, which could help explain the peak in threats (Barnes et al., 2024). Overall, this increase in threats is consistent with other trends in polarization within the US.
+Figure 1 displays the number of threats made against local officials over time. There is a clear, though uneven, increase in the number of threats, with a peak in July 2024. This coincides with an assassination attempt on former president and current presidential candidate Donald Trump, which could help explain the peak in threats (Barnes et al., 2024). Overall, this increase in threats is consistent with other trends in polarization within the US.
 
+
+#### Figure 1
 ```{r chunk3, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 events_per_month <- thd %>%
   mutate(month = format(DATE, "%Y-%m")) %>%  # Extract year-month
@@ -140,11 +143,13 @@ bar_chart <- ggplot(events_per_month, aes(x = as.Date(paste(month, "01", sep = "
 bar_chart
 ```
 
+
 ## Top Words for States
 
 Table 2 displays the top words of threat descriptions in states, as well as a map of states displaying county locations of the threats, shaded by the frequency of the threats.
 
+
 #### Table 2
-<iframe src="https://owhcbn-holt-cochran.shinyapps.io/DS3_Final_Project_copy/" width="100%" height="1000px" frameborder="0"></iframe>
+<iframe src="https://owhcbn-holt-cochran.shinyapps.io/DS3_Final_Project_States/" width="100%" height="1000px" frameborder="0"></iframe>
 
 
