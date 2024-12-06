@@ -1,0 +1,13 @@
+name: PPOL5202_Final_Project_states
+title: PPOL5202_Final_Project_states
+username: owhcbn-holt-cochran
+account: owhcbn-holt-cochran
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13541921
+bundleId: 9475303
+url: https://owhcbn-holt-cochran.shinyapps.io/PPOL5202_Final_Project_states/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: _quarto.yml|GIS_Manuscript.bib|images/conflict_dist.svg|index.qmd|README.md|_freeze|docs|DS3_Final_Project

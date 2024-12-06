@@ -1,4 +1,6 @@
-
+#```{r, shiny, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+#| standalone: true
+#| viewerHeight: 800
 library(shinylive)
 library(shiny)
 library(tidycensus)
@@ -7,7 +9,6 @@ library(dplyr)
 library(ggplot2)
 library(sf)
 library(shinythemes)
-library(readxl)
 
 # Load the data (ensure that 'thd' and 'state_top_words' are preloaded)
 geo_counties <- counties(cb = TRUE, year = 2022, progress_bar=FALSE)
@@ -15,10 +16,6 @@ geo_counties <- counties(cb = TRUE, year = 2022, progress_bar=FALSE)
 # Rename columns to match
 colnames(geo_counties)[colnames(geo_counties)=="NAME"] <- "COUNTY"
 colnames(geo_counties)[colnames(geo_counties)=="STATE_NAME"] <- "STATE"
-
-thd <- read_excel("/Users/holtcochran/PPOL-5202-Final-Project/DS3_Final_Project/BDI_THD_October2024.xlsx")
-
-state_top_words <- read.csv("/Users/holtcochran/PPOL-5202-Final-Project/DS3_Final_Project/state_top_words.csv")
 
 # Merge the data (assuming 'thd' is your dataset)
 geo_thd <- full_join(thd, geo_counties, by = c("COUNTY", "STATE"))
