@@ -1,0 +1,109 @@
+---
+title: "Coup-Proofing via Capital Relocation"
+subtitle: "DSAN 6750 / PPOL 6805: GIS for Spatial Data Science"
+authors:
+  - name: Jeff Jacobs
+    email: jj1088@georgetown.edu
+    affiliation: Georgetown University
+    corresponding: true
+df-print: kable
+bibliography: GIS_Manuscript.bib
+title-block-banner: "#E69F0095"
+title-block-banner-color: "black"
+format:
+  html:
+    df-print: kable
+  pdf:
+    # https://quarto.org/docs/reference/formats/pdf.html
+    link-citations: true
+prefer-html: true
+---
+
+## Introduction
+
+Several previous studies have found robust relationships between spatial properties of a country's **capital city** and that country's propensity for **conflict** and **misgovernance**.
+
+Perceptions of this linkage also have an effect on "coup-proofing" decisions made by national governments. A recent BBC interview with Equatorial Guinea's President Teodoro Obiang, for example, highlighted this as a factor behind his decision to relocate the capital city:
+
+> It's the remoteness of Oyala that makes it so appealing to President Obiang. In a rare interview he described how rebels had recently plotted a seaborne assault on his palace in the current capital, Malabo. 'We need a secure place for my government and for future governments. That's why we have created Oyala, to guarantee the government of Equatorial Guinea.' [@sackur_equatorial_2012]
+
+This case is far from exceptional, as an even more recent *Washington Post* article points out with respect to Myanmar's decision to move its capital from Yangon to Naypyidaw:
+
+> Analysts have described the decision as motivated by a desire to secure the military’s seat of power from any threat of protests or invasions. [@berger_myanmars_2021]
+
+Most of these studies, however, are based on observations of **conflict events**. In this study, we study the more fundamental variable of a capital's distance from the **population centroid** of the country.
+
+## Literature Review
+
+@campante_capital_2019 analyzes the relationship between the location of a **capital city** and the degree of conflict and misgovernance in a given country. Their two key findings are that:
+
+> Conflict is more likely to emerge (and dislodge incumbents) closer to the capital
+
+and
+
+> Isolated capitals are associated with misgovernance.
+
+This first finding is illustrated in @fig-conflict-dist
+
+![](images/conflict_dist.svg){#fig-conflict-dist}
+
+## Methodology
+
+The **population centroids** we use herein might require some explanation, since the term "centroid" can be ambiguous.
+
+Here, the population centroids are drawn from @hall_population_2019
+
+## Exploratory Data Analysis (EDA)
+
+Here we plot the base GIS objects we're analyzing: the location of each **capital city** (in purple) and each **population centroid** (in yellow).
+
+```{r}
+#| label: imports
+library(tidyverse) |> suppressPackageStartupMessages()
+library(sf) |> suppressPackageStartupMessages()
+library(mapview) |> suppressPackageStartupMessages()
+library(units) |> suppressPackageStartupMessages()
+cb_palette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+```{r}
+#| label: load-eda
+merged_long_sf <- readRDS("merged_long_sf.rds")
+mapview(merged_long_sf, zcol="name", cex=4, label="geounit")
+```
+
+We then construct an **area-normalized** measure of capital-centroid distance $\text{dist}^{\textsf{AN}}$, using the formula
+
+$$
+\text{dist}^{\textsf{AN}}_i = \text{dist}_i / \sqrt{\text{area}_i}.
+$$
+
+A plot of this measure by country looks as follows:
+
+```{r}
+#| label: plot-area
+merged_area_sf <- readRDS("merged_area_sf.rds")
+mapview(merged_area_sf, zcol="scaled_dist")
+```
+
+## Hypothesis Testing (Regression)
+
+```{r}
+#| label: plot-regression
+merged_sub_sf <- readRDS("merged_sub_sf.rds")
+merged_sub_sf |> head()
+```
+
+```{r}
+merged_sub_sf |> ggplot(aes(x=scaled_dist, y=total_score, label=NAME_ENGLI)) +
+  geom_point() +
+  geom_smooth(method='lm', formula= y~x) +
+  geom_text(size=4, nudge_y = 0.075) +
+  theme_classic()
+```
+
+## Discussion
+
+## Conclusion
+
+Our evidence indicates that the spatial dynamics of **conflict** differ from the spatial dynamics of **misgovernance**. Whereas 
