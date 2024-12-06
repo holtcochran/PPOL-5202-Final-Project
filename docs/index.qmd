@@ -1,0 +1,150 @@
+---
+title: "Threats Against US Government Officials "
+subtitle: "PPOL 5202 Final Project"
+authors:
+  - name: Holt Cochran
+    email: whc17@georgetown.edu
+    school: Georgetown University
+    corresponding: true
+df-print: kable
+bibliography: GIS_Manuscript.bib
+title-block-banner: "orange"
+title-block-banner-color: "black"
+format:
+  html:
+    df-print: kable
+  pdf:
+    # https://quarto.org/docs/reference/formats/pdf.html
+    link-citations: true
+prefer-html: true
+
+
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+library(shiny)
+library(leaflet)
+library(dplyr)
+library(DT)
+library(sf)
+library(readr)
+library(bslib)
+library(readxl)
+library(ggplot2)
+
+
+
+# Load the data
+thd <- read_excel("/Users/holtcochran/PPOL-5202-Final-Project/DS3_Final_Project/BDI_THD_October2024.xlsx")
+
+topics <- read_csv("/Users/holtcochran/PPOL-5202-Final-Project/DS3_Final_Project/topics.csv", show_col_types = FALSE)
+colnames(topics)[1] <- "Topics"
+topics$Topics <- c("Harrassment", "School Officials", "Racism", "Judiciary/Legal")
+
+state_top_words <- read_csv("/Users/holtcochran/PPOL-5202-Final-Project/DS3_Final_Project/state_top_words.csv", show_col_types = FALSE)
+colnames(state_top_words)[colnames(state_top_words) == "Top.Words"] <- "Top Words"
+
+# import new thd data
+thd_predictions <- read_csv("/Users/holtcochran/PPOL-5202-Final-Project/DS3_Final_Project/thd_predictions.csv", show_col_types = FALSE)
+
+thd_topic_average <- thd_predictions %>%
+  group_by(predicted_state) %>%
+  summarise(
+    avg_topic_1 = mean(topic_0, na.rm = TRUE),
+    avg_topic_2 = mean(topic_1, na.rm = TRUE),
+    avg_topic_3 = mean(topic_2, na.rm = TRUE),
+    avg_topic_4 = mean(topic_3, na.rm = TRUE)
+  )
+
+# download geometries
+states_geo <- tigris::states(cb = TRUE, progress_bar = FALSE)
+
+# merge with geo data
+thd_geo <- thd_topic_average %>%
+  left_join(states_geo, by = c("predicted_state" = "NAME")) %>%
+  st_as_sf()
+
+# Load the classification report
+precision_data <- read.csv("/Users/holtcochran/PPOL-5202-Final-Project/DS3_Final_Project/classification_report.csv")
+
+# Merge precision data with geometries
+states_precision <- thd_geo %>%
+  left_join(precision_data, by = c("predicted_state" = "STATE")) %>%
+  st_as_sf()
+
+```
+
+
+## Introduction
+
+As political polarization has increased in the United States, so too has the intensity and malice of criticism against government officials. Amplified by recent events such as the 2020 presidential election and COVID-19 pandemic, this escalation in scrutiny has expanded to all levels of government (Kleinfeld, 2023). Government officials in lower-profile positions, once overlooked by the public, are now frequently targets of public criticism and, increasingly, serious threats that mirror risks historically faced by high-profile officials (Kuznia et al., 2023). 
+
+Given the escalating threats that local government officials face, and the timing of this research coinciding with the 2024 presidential election, my research objective is to examine characteristics, patterns, and trends in threats against local government officials in the United States. My objective is two-fold in nature: I will first conduct an exploratory analysis of the nature of threats against local officials to identify topics that are motivators for or common within targeted threats; I then will use this information to predict geographic “hotspots” or areas of the country where threats are likely to happen, while also identifying areas that are more at risk of certain types of threats or sensitive to political issues. This research could be used to inform local officials of their levels of risk, or notify them of political or economic issues that can lead to increased threats; ultimately these findings could be used to increase the safety of these officials. 
+
+Elected government officials are increasingly targets of threats and harassment, but these hostilities have historically been difficult to track. Social media provides a medium for direct and mass, yet anonymous, dissemination of threats against officials, and these threats are not always documented or adequately investigated. Further, given the nature of local government, there has historically been a lack of aggregation of these threats into a single space. Data on threats against local officials are typically spread out across municipalities around the country or grouped into other statistics reported by law enforcement agencies (Simi et al., 2024). 
+
+
+## Data Sources
+
+The data in this analysis comes from the Bridging Divides Initiative (BDI) from Princeton University which publishes the Threats and Harassment Dataset (THD), a novel dataset that compiles information on instances of threats and harassment against local government officials into a single database (Bridging Divides Initiative, 2024). The BDI states that it gathers the data from a wide range of partner organizations, social media platforms, and open-source government data. The data is reported monthly, starting in January 2022 and updated to present day - the most recently available data is from October 2024.
+
+The dataset is at the event level, meaning the unit of analysis is an official instance of a serious threat or harassment against a local, elected, appointed, or municipal official. Threats can take many forms: common examples in the data are emails, social media messages, and phone calls. The data are observations of threats against elected officials, not the verbatim threats themselves; the variables include relevant information about the threat such as the position of the targeted official, the county and state in which the incident happened, and the date of the incident. Other important variables include a broad categorization of the type of threat, and an “event summary” column that provides a summary of the incident with key information not contained elsewhere in the data.	
+
+Table 1 displays threat descriptions for a specified date from the BDI dataset.
+
+#### Table 1
+```{r chunk2, echo=FALSE, message=FALSE, warning=FALSE}
+
+# Create the interactive table
+datatable(
+  thd %>%
+    select(DATE, EVENT.SUMMARY) %>%  # Keep only the necessary columns
+    mutate(DATE = sub("T00:00:00Z$", "", DATE)),  # Remove the unwanted time part
+  filter = "top",  # Add a filter option for each column
+  options = list(
+    pageLength = 5,  # Number of rows per page
+    autoWidth = TRUE  # Adjust column widths automatically
+  ),
+  rownames = FALSE
+)
+
+```
+
+## Exploratory Data Analysis (EDA)
+
+
+Figure 2 displays the number of threats made against local officials over time. There is a clear, though uneven, increase in the number of threats, with a peak in July 2024. This coincides with an assassination attempt on former president and current presidential candidate Donald Trump, which could help explain the peak in threats (Barnes et al., 2024). Overall, this increase in threats is consistent with other trends in polarization within the US.
+
+```{r chunk3, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+events_per_month <- thd %>%
+  mutate(month = format(DATE, "%Y-%m")) %>%  # Extract year-month
+  group_by(month) %>%  # Group by month
+  summarise(event_count = n(), .groups = 'drop') 
+
+
+bar_chart <- ggplot(events_per_month, aes(x = as.Date(paste(month, "01", sep = "-")), y = event_count)) +
+  geom_bar(stat = "identity", fill = "#1f77b4", color = "#1f77b4", width = 8) +  # Purple color and wider bars
+  labs(title = "Number of Threats Over Time",
+       x = "Month",
+       y = "Number of Threats") +
+  scale_x_date(date_labels = "%b %Y", date_breaks = "6 months") +  # Clean x-axis with formatted labels
+  theme_minimal(base_size = 12) +  # Use minimal theme with a specified font size
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),  # Rotate x-axis labels for readability
+    axis.title = element_text(face = "bold"),  # Bold axis titles for emphasis
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 15)  # Centered and bold title
+  )
+
+# Display the plot
+bar_chart
+```
+
+## Top Words for States
+
+Table 2 displays the top words of threat descriptions in states, as well as a map of states displaying county locations of the threats, shaded by the frequency of the threats.
+
+#### Table 2
+<iframe src="https://owhcbn-holt-cochran.shinyapps.io/DS3_Final_Project/" width="100%" height="600px" frameborder="0"></iframe>
+
+
