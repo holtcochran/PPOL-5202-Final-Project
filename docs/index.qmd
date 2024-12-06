@@ -115,7 +115,7 @@ datatable(
 
 Figure 2 displays the number of threats made against local officials over time. There is a clear, though uneven, increase in the number of threats, with a peak in July 2024. This coincides with an assassination attempt on former president and current presidential candidate Donald Trump, which could help explain the peak in threats (Barnes et al., 2024). Overall, this increase in threats is consistent with other trends in polarization within the US.
 
-```{r chunk3, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+```{r chunk3, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 events_per_month <- thd %>%
   mutate(month = format(DATE, "%Y-%m")) %>%  # Extract year-month
   group_by(month) %>%  # Group by month
@@ -144,7 +144,7 @@ bar_chart
 Table 2 displays the top words of threat descriptions in states, as well as a map of states displaying county locations of the threats, shaded by the frequency of the threats.
 
 #### Table 2
-```{r chunk4, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+```{r chunk4, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
 library(shiny)
 library(tidycensus)
 library(tigris)
@@ -154,7 +154,7 @@ library(sf)
 library(shinythemes)
 
 # Load the data (ensure that 'thd' and 'state_top_words' are preloaded)
-geo_counties <- counties(cb = TRUE, year = 2022)
+geo_counties <- counties(cb = TRUE, year = 2022, progress_bar=FALSE)
 
 # Rename columns to match
 colnames(geo_counties)[colnames(geo_counties)=="NAME"] <- "COUNTY"
