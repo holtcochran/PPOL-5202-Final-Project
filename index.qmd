@@ -10,6 +10,7 @@ df-print: kable
 bibliography: GIS_Manuscript.bib
 title-block-banner: "orange"
 title-block-banner-color: "black"
+runtime: shiny
 format:
   html:
     df-print: kable
@@ -17,7 +18,7 @@ format:
     # https://quarto.org/docs/reference/formats/pdf.html
     link-citations: true
 prefer-html: true
-runtime: shiny
+
 ---
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -145,6 +146,9 @@ Table 2 displays the top words of threat descriptions in states, as well as a ma
 
 #### Table 2
 ```{r chunk4, echo=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+#| standalone: true
+#| viewerHeight: 800
+library(shinylive)
 library(shiny)
 library(tidycensus)
 library(tigris)
