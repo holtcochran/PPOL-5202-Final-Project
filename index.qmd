@@ -146,7 +146,7 @@ bar_chart
 
 ## Top Words for States
 
-Table 2 displays the top words of threat descriptions in states, as well as a map of states displaying county locations of the threats, shaded by the frequency of the threats.
+Table 2 displays the top words of threat descriptions in states, as well as a map of states displaying county locations of the threats, shaded by the frequency of the threats.. 
 
 
 #### Table 2
