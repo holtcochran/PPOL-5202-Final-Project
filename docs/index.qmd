@@ -162,7 +162,7 @@ To identify patterns within the threats against state and local government offic
 library(gt)
 
 # import topic words data 
-topic_words <- read_csv("../DS3_Final_Project/topics_with_words.csv")
+topic_words <- read_csv("/Users/holtcochran/PPOL-5202-Final-Project/DS3_Final_Project/topics_with_words.csv")
 
 # rename topics
 categories <- c("Schools", "Home Threats", "Local Government", "Judicial", "Racism and Harassment")
