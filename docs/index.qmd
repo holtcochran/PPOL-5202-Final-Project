@@ -7,6 +7,7 @@ authors:
     school: Georgetown University
     corresponding: true
 df-print: kable
+bibliography: GIS_Manuscript.bib
 title-block-banner: "orange"
 title-block-banner-color: "black"
 format:
