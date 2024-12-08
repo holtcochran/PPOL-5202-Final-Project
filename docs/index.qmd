@@ -158,7 +158,7 @@ Figure 2 displays the top words of threat descriptions in states, as well as a m
 
 To identify patterns within the threats against state and local government officials, a Latent Dirichlet Allocation (LDA) model implemented to group words in the Event Summary column of the dataset. Table 2 displays the top 10 words for each topic - the topics have been renamed to reflect categories that the words fall into.
 
-```{r}
+```{r chun3, echo=FALSE, message=FALSE, warning=FALSE}
 library(gt)
 
 # import topic words data 
