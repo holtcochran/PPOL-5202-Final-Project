@@ -232,7 +232,7 @@ Further analyses can be identified through state comparisons in Table 3, as well
 
 ### References
 
-> 1) Kleinfeld, R. (2023, September 5). Polarization, Democracy, and Political Violence in the United States: What the Research Says. CarnegieEndowment.org. https://carnegieendowment.org/research/2023/09/polarization-democracy-and-political-violence-in-the-united-states-what-the-research-says?lang=en 
+> Kleinfeld, R. (2023, September 5). Polarization, Democracy, and Political Violence in the United States: What the Research Says. CarnegieEndowment.org. https://carnegieendowment.org/research/2023/09/polarization-democracy-and-political-violence-in-the-united-states-what-the-research-says?lang=en 
 
 
 ### Dataset
