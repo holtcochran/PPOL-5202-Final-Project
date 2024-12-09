@@ -1,6 +1,6 @@
 ---
 title: "Threats Against US Government Officials "
-subtitle: "PPOL 5202 Final Project"
+subtitle: "PPOL 5205 Final Project"
 authors:
     name: Holt Cochran
     email: whc17@georgetown.edu
