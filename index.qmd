@@ -78,9 +78,9 @@ states_precision <- thd_geo %>%
 
 ## Introduction
 
-As political polarization has increased in the United States, so too has the intensity and malice of criticism against government officials. Amplified by recent events such as the 2020 presidential election and the COVID-19 pandemic, this escalation in scrutiny has expanded to all levels of government^1^. Government officials in lower-profile positions, once overlooked by the public, are now frequently targets of public criticism and, increasingly, serious threats that mirror risks historically faced by high-profile officials^2^. 
+As political polarization has increased in the United States, so too has the intensity and malice of criticism against government officials. Amplified by recent events such as the 2020 presidential election and the COVID-19 pandemic, this escalation in scrutiny has expanded to all levels of government^1^. Government officials in lower-profile positions, once overlooked by the public, are now increasingly targets of public criticism and serious threats of harm, harrassment, violence, and death.
 
-Given the escalating threats that local government officials face, my research objective is to examine characteristics, patterns, and trends of threats against local government officials in the United States. This research explores a concerning and escalating trend surrounding elected government officials. Local officials seldom have the protections or safety resources of higher-level officials, making them more vulnerable to these threats. 
+Given the surge in threats that local government officials face, my research objective is to examine characteristics, patterns, and trends of threats against local government officials in the United States. This research explores a concerning and escalating trend surrounding elected government officials. Local officials seldom have the protections or safety resources of higher-level officials, making them more vulnerable to these threats. 
 
 
 ## Data Sources
@@ -229,11 +229,10 @@ Identifiable patterns in the threat descriptions exist in the dataset, which can
 
 Further analyses can be identified through state comparisons in Table 3, as well as further modeling of the threats themselves.
 
+
 ### References
 
 > 1) Kleinfeld, R. (2023, September 5). Polarization, Democracy, and Political Violence in the United States: What the Research Says. CarnegieEndowment.org. https://carnegieendowment.org/research/2023/09/polarization-democracy-and-political-violence-in-the-united-states-what-the-research-says?lang=en 
-
-> 2) Kuznia, R., Kamp, M. de P., Matthews, A. L., Lah, K., Rappard, A.-M., & Abou-Ghazala, Y. (2023, December 7). A deluge of violent messages: How a surge in threats to public officials could disrupt American democracy | CNN politics. CNN. https://www.cnn.com/2023/12/07/politics/threats-us-public-officials-democracy-invs/index.html 
 
 
 ### Dataset
