@@ -146,7 +146,9 @@ bar_chart
 
 ## Top Words for States
 
-For further exploratory data analysis, key words of threats within states are extracted and the threat locations are mapped. Figure 2 displays the top words of threat descriptions in states, as well as a map of states displaying county locations of the threats, shaded by the frequency of the threats. By selecting a specific state, the top key words of the threats made within the state appear, as well as the geographic location of the threats at the county level. This allows for initial analysis into topics and geolocations of threats within specified states. 
+For further exploratory data analysis, key words of threats within states are extracted and the threat locations are mapped. Figure 2 displays the top words of threat descriptions in states, as well as a map of states displaying county locations of the threats, shaded by the frequency of the threats. 
+
+By selecting a specific state, the top key words of the threats made within the state appear, as well as the geographic location of the threats at the county level. This allows for initial analysis into topics and geolocations of threats within specified states. 
 
 
 #### Figure 2
@@ -203,7 +205,7 @@ gt_table
 
 ## Threat Prediction 
 
-After identifying topics within the threat summaries and grouping the threats into categories, I predict locations of threats across the United States. To do this, I build a random forest (rf) machine learning classifier model to predict the threat locations. I use the topic probabilities from the topic model, as well as geographic location of the threats and other descriptive features in the data set (i.e. position of the official threatened), as input features to train the model. I then predict location of threats at the state level.
+After identifying topics within the threat summaries and grouping the threats into categories, I predict locations of threats across the United States. To do this, I build a random forest (rf) machine learning classifier model to predict the threat locations. I use the topic probabilities from the topic model, as well as geographic location of the threats and other descriptive features in the dataset (i.e. position of the official threatened), as input features to train the model. I then predict location of threats at the state level.
 
 To evaluate the model, I analyze the model precision metric. Precision is appropriate for this analysis because it measures the true-positive rate of the model - in these methods, precision measures how often the model correctly predicted a threat's geographic location. This is useful for analysis compared with overall model accuracy because accuracy would include predicting the absence of threats in states as well. As I am only focused on threats that actually happened, I focus on precision to identify how well the model does in predicting real threats.
 
@@ -223,7 +225,7 @@ For a more centralized view of state topic probabilities and precision, a table 
 
 ## Discussion
 
-Identifiable patterns in the threat descriptions exist in the data set, which can be applied more genearlly to state and nation-wide trends. Based on geographic distributions of topic probabilities in Figure 3, it is clear that certain states are more sensitive to specific topics than others. At a broader level, states with high precision metrics indicate that there are certain factors that can be used to predict instances of threats against government officials. As the frequency of these threats continue to increase, identifying patterns within the threats is an important step to raising awareness for the safety of the officials and combatting political violence. 
+Identifiable patterns in the threat descriptions exist in the dataset, which can be applied more genearlly to state and nation-wide trends. Based on geographic distributions of topic probabilities in Figure 3, it is clear that certain states are more sensitive to specific topics than others. At a broader level, states with high precision metrics indicate that there are certain factors that can be used to predict instances of threats against government officials. As the frequency of these threats continue to increase, identifying patterns within the threats is an important step to raising awareness for the safety of the officials and combatting political violence. 
 
 Further analyses can be identified through state comparisons in Table 3, as well as further modeling of the threats themselves.
 
